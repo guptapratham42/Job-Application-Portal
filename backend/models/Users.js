@@ -1,17 +1,34 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const roles=['Applicant', 'Recruiter']
 // Create Schema
-const UserSchema = new Schema({
-	name: {
+const UserSchema = new Schema
+({
+	name: 
+	{
 		type: String,
 		required: true
 	},
-	email: {
+	email: 
+	{
+		type: String,
+		required: true,
+		unique: true
+	},
+	password:
+	{
 		type: String,
 		required: true
 	},
-	date:{
+	role:
+	{
+		type: String,
+		required: true,
+		enum: roles
+	},
+	date:
+	{
 		type: Date,
 		required: false
 	}

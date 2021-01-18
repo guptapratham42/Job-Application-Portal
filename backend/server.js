@@ -5,12 +5,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 4000;
 const DB_NAME = "tutorial"
+require("dotenv").config();
 
 // routes
 var testAPIRouter = require("./routes/testAPI");
 var UserRouter = require("./routes/Users");
 
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
