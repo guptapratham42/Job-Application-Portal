@@ -38,7 +38,11 @@ export default class Login extends Component {
                 if(res.data.msg)
                     alert(res.data.msg);
                 else
-                 alert("Successfully Logged in\t" + res.data.user.name);console.log(res.data);
+                 {
+                    alert("Successfully Logged in\t" + res.data.user.name);console.log(res.data);
+                    this.props.history.push("/RecHome");
+                    window.location.reload();
+                 }
                 })
              ;
 

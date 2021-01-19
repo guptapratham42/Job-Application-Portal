@@ -8,6 +8,7 @@ import Register from './components/Common/Register'
 import Login from './components/Common/Login'
 import Navbar from './components/templates/Navbar'
 import Profile from './components/Users/Profile'
+import RecHome from './components/Recruiter/RecHome'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" component={Register}/>
         <Route path="/profile" component={Profile}/>
         <Route path="/login" component={Login}/>
+        <Route path="/RecHome" component={RecHome}/>
       </div>
     </Router>
   );
