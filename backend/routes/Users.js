@@ -8,7 +8,7 @@ const User = require("../models/Users");
 
 // GET request 
 // Getting all the users
-router.get("/", auth, function(req, res) {
+router.get("/", function(req, res) {
     User.find(function(err, users) {
 		if (err) {
 			console.log(err);
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
     });
     const { email, name, password, role, date}= req.body;
     if(!name || !email || !password || !role)
-        return res.status(400).json({msg: "Please enter all the required details!"});
+        return res.status(200).json({msg: "Please enter all the required details!"});
     //const existingUser= await User.findOne({ email: email });
     //     User.findOne({ email }).then(Existinguser => {
     //     // Check if user email exists
@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
             res.status(200).json(user);
         })
         .catch(err => {
-            res.status(400).send(err);
+            res.status(200).send(err);
         });
 });
 
@@ -61,16 +61,16 @@ router.post("/login", async (req, res) => {
 	const {email, password} = req.body;
 	// Find user by email
     if(!email || !password)
-        return res.status(400).json({msg: "Please enter all the required details!"});
+        return res.status(200).json({msg: "Please enter all the required details!"});
 	const user= await User.findOne({ email: email });
     if(!user)
-        return res.status(400).json({msg: "No account with this email found"});
+        return res.status(200).json({msg: "No account with this email found"});
     //console.log(password);
     //console.log(user.password);
     const ismatch = await bcrypt.compare(password, user.password);
     if(!ismatch)
     {
-        return res.status(400).json({msg: "Incorrect password"});
+        return res.status(200).json({msg: "Incorrect password"});
     }
     const token = jwt.sign({ id: user._id}, "abc");
     res.json({
