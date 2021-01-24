@@ -12,7 +12,7 @@ export default class RecHome extends Component {
     }
 
     componentDidMount() {
-
+        
     }
 
     render() {

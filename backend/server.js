@@ -10,6 +10,7 @@ require("dotenv").config();
 // routes
 var testAPIRouter = require("./routes/testAPI");
 var UserRouter = require("./routes/Users");
+var JobsRouter = require("./routes/Jobs");
 
 app.use(cors());
 app.use(express.json());
@@ -26,6 +27,7 @@ connection.once('open', function() {
 // setup API endpoints
 app.use("/testAPI", testAPIRouter);
 app.use("/user", UserRouter);
+app.use("/jobs", JobsRouter);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,60 +16,21 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SearchIcon from "@material-ui/icons/Search";
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-
-
 class UsersList extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {users: [],sortedUsers: [], sortName:true};
-        this.renderIcon = this.renderIcon.bind(this);
-        this.sortChange = this.sortChange.bind(this);
+        this.state = {users: []};
     }
 
     componentDidMount() {
         axios.get('http://localhost:4000/user')
              .then(response => {
-                 this.setState({users: response.data, sortedUsers:response.data});
+                 this.setState({users: response.data});
              })
              .catch(function(error) {
                  console.log(error);
              })
-    }
-
-    sortChange(){
-/**
- *      Note that this is sorting only at front-end.
- */
-        var array = this.state.users;
-        var flag = this.state.sortName;
-        array.sort(function(a, b) {
-            if(a.date != undefined && b.date != undefined){
-                return (1 - flag*2) * (new Date(a.date) - new Date(b.date));
-            }
-            else{
-                return 1;
-            }
-          });
-        this.setState({
-            users:array,
-            sortName:!this.state.sortName,
-        })
-    }
-
-    renderIcon(){
-        if(this.state.sortName){
-            return(
-                <ArrowDownwardIcon/>
-            )
-        }
-        else{
-            return(
-                <ArrowUpwardIcon/>
-            )            
-        }
     }
 
     render() {
@@ -130,7 +90,7 @@ class UsersList extends Component {
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
-                                            <TableCell> <Button onClick={this.sortChange}>{this.renderIcon()}</Button>Date</TableCell>
+                                            <TableCell>Date</TableCell>
                                             <TableCell>Name</TableCell>
                                             <TableCell>Email</TableCell>
                                     </TableRow>

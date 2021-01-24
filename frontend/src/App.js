@@ -9,7 +9,8 @@ import Login from './components/Common/Login'
 import Navbar from './components/templates/Navbar'
 import Profile from './components/Users/Profile'
 import RecHome from './components/Recruiter/RecHome'
-
+import NewJob from './components/Recruiter/NewJob'
+import MyJobs from './components/Recruiter/MyJobs'
 function App() {
   return (
     <Router>
@@ -22,6 +23,8 @@ function App() {
         <Route path="/profile" component={Profile}/>
         <Route path="/login" component={Login}/>
         <Route path="/RecHome" component={RecHome}/>
+        <Route path="/NewJob" component={NewJob}/>
+        <Route path="/MyJobs" component={MyJobs}/>
       </div>
     </Router>
   );
