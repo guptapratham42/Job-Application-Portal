@@ -43,8 +43,16 @@ export default class Login extends Component {
                     //console.log(localStorage.getItem("LoggedinUser"));
                     //console.log(res.data[0]);
                     alert("Successfully Logged in\t" + res.data.user.name);console.log(res.data);
-                    this.props.history.push("/RecHome");
-                    window.location.reload();
+                    if(res.data.user.role==="Recruiter")
+                    {
+                        this.props.history.push("/RecHome");
+                        window.location.reload();
+                    }
+                    else
+                    {
+                        this.props.history.push("/Applicant");
+                        window.location.reload();
+                    }
                  }
                 })
              ;

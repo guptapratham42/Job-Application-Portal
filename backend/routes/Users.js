@@ -84,4 +84,17 @@ router.post("/update", async (req, res) => {
     //console.log(req.body);
     return res.status(200).json(user);
 });
+router.post("/AppProfile", async (req, res) => {
+    var query={_id: req.body.id};
+    var newval={name: req.body.name, email: req.body.email};
+    //console.log(req.body);
+    User.updateOne(query, newval, function(err, final)
+    {
+        //if(err)
+          //  throw err;
+        //console.log("deleted");
+        return res.status(200).json({msg: "updated Profile"});
+    })
+});
+
 module.exports = router;

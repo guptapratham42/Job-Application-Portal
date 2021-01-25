@@ -54,6 +54,19 @@ router.post("/MyJobs", async (req, res) => {
      .then(MyJobs => res.json(MyJobs))
      .catch(err=> res.status(400).json(err));
 });
+router.post("/AllJobs", async (req, res) => {
+    // const _id=req.body.user;
+    Jobs.find({isActive: true, isDeleted: false})
+     .then(MyJobs => res.json(MyJobs))
+     .catch(err=> res.status(400).json(err));
+});
+router.post("/SearchJobs", async (req, res) => {
+    // const _id=req.body.user;s
+    //console.log(req.body);
+    Jobs.find({title: req.body.title, isActive: true, isDeleted: false})
+     .then(MyJobs => res.json(MyJobs))
+     .catch(err=> res.status(400).json(err));
+});
 router.post("/DeleteJob", async (req, res) => {
     var query={_id: req.body.id};
     var newval={isDeleted: true};
