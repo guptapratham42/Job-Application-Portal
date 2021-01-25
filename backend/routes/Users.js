@@ -18,10 +18,7 @@ router.get("/", function(req, res) {
 	})
 });
 
-// NOTE: Below functions are just sample to show you API endpoints working, for the assignment you may need to edit them
 
-// POST request 
-// Add a user to db
 router.post("/register", async (req, res) => {
     const newUser = new User({
         name: req.body.name,
@@ -33,16 +30,6 @@ router.post("/register", async (req, res) => {
     const { email, name, password, role, date}= req.body;
     if(!name || !email || !password || !role)
         return res.status(200).json({msg: "Please enter all the required details!"});
-    //const existingUser= await User.findOne({ email: email });
-    //     User.findOne({ email }).then(Existinguser => {
-    //     // Check if user email exists
-        // if (Existinguser) {
-        //     return res.status(404).json({
-        //         msg: "Account with this email already exists",
-        //     });
-        //     return;
-  // }
-    // });
     const salt = await bcrypt.genSalt();
     const passwordhash = await bcrypt.hash(password, salt);
     newUser.password=passwordhash;
@@ -79,4 +66,22 @@ router.post("/login", async (req, res) => {
     })
 });
 
+router.post("/RecProfile", async (req, res) => {
+    var query={_id: req.body.id};
+    var newval={name: req.body.name, email: req.body.email, number: req.body.number, Bio: req.body.Bio};
+    //console.log(req.body);
+    User.updateOne(query, newval, function(err, final)
+    {
+        //if(err)
+          //  throw err;
+        //console.log("deleted");
+        return res.status(200).json({msg: "updated Profile"});
+    })
+});
+router.post("/update", async (req, res) => {
+    const user= await User.findOne({ _id: req.body.id });
+    //var newval={name: req.body.name, email: req.body.email, number: req.body.number, Bio: req.body.Bio};
+    //console.log(req.body);
+    return res.status(200).json(user);
+});
 module.exports = router;

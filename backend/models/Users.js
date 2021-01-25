@@ -31,6 +31,18 @@ const UserSchema = new Schema
 	{
 		type: Date,
 		required: false
+	},
+	number:
+	{
+		type: Number,
+		required: false,
+		default: parseInt("00"),
+	},
+	Bio:
+	{
+		type: String,
+		required: false,
+		default: "Bio not yet entered"
 	}
 });
 
