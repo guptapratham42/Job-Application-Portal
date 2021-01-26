@@ -13,6 +13,8 @@ import Applicant from './components/Applicants/EditApplicant'
 import NewJob from './components/Recruiter/NewJob'
 import MyJobs from './components/Recruiter/MyJobs'
 import AllJobs from './components/Applicants/AllJobs'
+import MyApplications from './components/Applicants/MyApplications'
+import JobApplications from './components/Recruiter/JobApplications'
 function App() {
   return (
     <Router>
@@ -29,6 +31,8 @@ function App() {
         <Route path="/MyJobs" component={MyJobs}/>
         <Route path="/Applicant" component={Applicant}/>
         <Route path="/Alljobs" component={AllJobs}/>
+        <Route path="/MyApplications" component={MyApplications}/>
+        <Route path="/JobApplications" component={JobApplications}/>
       </div>
     </Router>
   );

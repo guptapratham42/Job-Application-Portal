@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // Load User model
 const auth= require("../middleware/auth");
 const Jobs = require("../models/Jobs");
-
+const application = require("../models/Application");
 router.get("/", function(req, res) {
     Jobs.find(function(err, jobs) {
         if (err) {
@@ -72,9 +72,6 @@ router.post("/DeleteJob", async (req, res) => {
     var newval={isDeleted: true};
     Jobs.updateOne(query, newval, function(err, final)
     {
-        //if(err)
-          //  throw err;
-        //console.log("deleted");
         return res.status(200).json({msg: "deleted job"});
     })
 });
@@ -83,10 +80,45 @@ router.post("/UpdateJob", async (req, res) => {
     var newval={no_of_positions: req.body.positions, no_of_applicants: req.body.applicants};
     Jobs.updateOne(query, newval, function(err, final)
     {
-        //if(err)
-          //  throw err;
-        //console.log("deleted");
         return res.status(200).json({msg: "updated job"});
     })
+});
+router.post("/getjob", async (req, res) => {
+    // const _id=req.body.user;
+    Jobs.find({_id: req.body.id, isActive: true, isDeleted: false})
+     .then(MyJobs => res.json(MyJobs))
+     .catch(err=> res.status(400).json(err));
+});
+router.post("/Newapplication", async (req, res) => {
+    const Newapplication = new application({
+        applicant_name: req.body.applicant_name,
+        applicant_id: req.body.applicant_id,
+        date_of_application: req.body.date_of_application,
+        sop: req.body.sop,
+        email_of_recruiter: req.body.email_of_recruiter,
+        job_id: req.body.job_id,
+        job_title: req.body.job_title,
+        salary: req.body.salary,
+        name_of_recruiter: req.body.name_of_recruiter
+    });
+        Newapplication.save()
+        .then(application => {
+            res.status(200).json(application);
+        })
+        .catch(err => {
+            res.status(200).send(err);
+        });
+});
+router.post("/MyApplications", async (req, res) => {
+    // const _id=req.body.user;
+    application.find({applicant_id: req.body.user._id})
+     .then(MyApplications => res.json(MyApplications))
+     .catch(err=> res.status(400).json(err));
+});
+router.post("/MyApplications2", async (req, res) => {
+    // const _id=req.body.user;
+    application.find({job_id: req.body.id})
+     .then(MyApplications => res.json(MyApplications))
+     .catch(err=> res.status(400).json(err));
 });
 module.exports = router;

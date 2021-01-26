@@ -25,10 +25,17 @@ class UsersList extends Component {
         this.state = {jobs: [], addModelshow:false};
         this.handleClickDelete = this.handleClickDelete.bind(this);
         this.handleClickUpdate = this.handleClickUpdate.bind(this);
+        this.handleClickapplications = this.handleClickapplications.bind(this);
     }
     handleClickUpdate()
     {
         this.setState({addModelshow:true});
+    }
+    handleClickapplications(id)
+    {
+        localStorage.setItem("job_id", id);
+        this.props.history.push("/JobApplications");
+        window.location.reload();
     }
     handleClickDelete(id)
     {
@@ -62,54 +69,6 @@ class UsersList extends Component {
         return (
             <div>
                 <Grid container>
-                <Grid item xs={12} md={3} lg={3}>
-                    <List component="nav" aria-label="mailbox folders">
-                        <ListItem text>
-                                        <h3>Filters</h3>
-                        </ListItem>
-                    </List>
-                </Grid>
-                    <Grid item xs={12} md={9} lg={9}>
-                    <List component="nav" aria-label="mailbox folders">
-                        <TextField 
-                        id="standard-basic" 
-                        label="Search" 
-                        fullWidth={true}   
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment>
-                                    <IconButton>
-                                        <SearchIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            )}}
-                        />
-                    </List>
-                    </Grid>
-                </Grid>
-                <Grid container>
-                    <Grid item xs={12} md={3} lg={3}>
-                        <List component="nav" aria-label="mailbox folders">
-
-                            <ListItem button>
-                                <form noValidate autoComplete="off">
-                                    <label>Salary</label>
-                                    <TextField id="standard-basic" label="Enter Min" fullWidth={true} />
-                                    <TextField id="standard-basic" label="Enter Max" fullWidth={true}/>
-                                </form>                                                                
-                            </ListItem>
-                            <Divider />
-                            <ListItem button divider>
-                                <Autocomplete
-                                    id="combo-box-demo"
-                                    options={this.state.jobs}
-                                    getOptionLabel={(option) => option.name}
-                                    style={{ width: 300 }}
-                                    renderInput={(params) => <TextField {...params} label="Select Names" variant="outlined" />}
-                                />
-                            </ListItem>
-                        </List>
-                    </Grid>
                     <Grid item xs={12} md={9} lg={9}>
                         <Paper>
                             <Table size="small">
@@ -138,6 +97,9 @@ class UsersList extends Component {
                                             </button>
                                             <Popup onHide={addModelclose} show={this.state.addModelshow} jobs={jobs._id}></Popup>
                                             </TableCell>
+                                            <TableCell><button onClick={() => this.handleClickapplications(jobs._id)}>
+                                            View Applications
+                                            </button></TableCell>
                                         </TableRow>
                                 ))}
                                 </TableBody>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 //import moment from 'moment';
 import axios from 'axios';
+import Popup from "./Popup";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,7 +23,7 @@ class UsersList extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {jobs: [], email:'', type:'Full-Time', minsal:0, maxsal:0, duration:1, tempjobs: []};
+        this.state = {jobs: [], email:'', type:'Full-Time', minsal:0, maxsal:0, duration:1, tempjobs: [], addModelshow:false};
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeminsal = this.onChangeminsal.bind(this);
         this.onChangemaxsal = this.onChangemaxsal.bind(this);
@@ -33,6 +34,11 @@ class UsersList extends Component {
         this.onSubmit3= this.onSubmit3.bind(this);
         this.onSubmit4= this.onSubmit4.bind(this);
         this.handleClickApply= this.handleClickApply.bind(this);
+        this.handleClickdd=this.handleClickdd.bind(this);
+        this.handleClickdi=this.handleClickdi.bind(this);
+        this.handleClicksi=this.handleClicksi.bind(this);
+        this.handleClicksd=this.handleClicksd.bind(this);
+        //this.handleClickUpdate = this.handleClickUpdate.bind(this);
     }
     onChangeEmail(event) {
         this.setState({ email: event.target.value });
@@ -107,7 +113,8 @@ class UsersList extends Component {
     }
     handleClickApply(id)
     {
-        console.log(id);
+        this.setState({addModelshow:true});
+        //console.log(id);
     }      
     componentDidMount() {
         var user_info=JSON.parse(localStorage.getItem("LoggedinUser"));
@@ -117,20 +124,39 @@ class UsersList extends Component {
             this.setState({jobs: res.data});
            })
         ;
-        let tempjobs=this.state.jobs;
-        //console.log(new Date(Date.now()));
-        //console.log(this.state.jobs.deadline);
-        // console.log(this.state.tempjobs);
-        //var now= moment();
-        // let newjobs= tempjobs.filter(tempjobs => Date.now().isAfter(tempjobs.deadline));
-        //   this.setState({
-        //       jobs: newjobs,
-        //   });
-         //console.log(newjobs);
+    }
+    handleClicksi()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.salary > b.salary) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClicksd()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.salary < b.salary) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClickdd()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.duration < b.duration) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClickdi()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.duration > b.duration) ? 1 : -1);
+        this.setState({jobs: thiss});
     }
     render() {
+        let addModelclose=() => this.setState({addModelshow:false});
         return (
             <div>
+                <button onClick={() => this.handleClicksi()}>Salary Increasing</button>
+                <button onClick={() => this.handleClicksd()}>Salary Decreasing</button>
+                <button onClick={() => this.handleClickdi()}>Duration Increasing</button>
+                <button onClick={() => this.handleClickdd()}>Duration Decreasing</button>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Title: </label>
@@ -166,8 +192,6 @@ class UsersList extends Component {
                                value={this.state.minsal}
                                onChange={this.onChangeminsal}
                                />
-                    </div>
-                    <div className="form-group">
                         <label>Max Salary: </label>
                         <input type="Number" 
                                className="form-control" 
@@ -220,9 +244,11 @@ class UsersList extends Component {
                                             <TableCell>{jobs.duration}</TableCell>
                                             <TableCell>{jobs.type}</TableCell>
                                             <TableCell>{jobs.deadline}</TableCell>
-                                            <TableCell><button onClick={() => this.handleClickApply(jobs._id)}>
+                                            <TableCell><button onClick={() => this.handleClickApply(jobs.email_of_recruiter)}>
                                             Apply
-                                            </button></TableCell>
+                                            </button>
+                                            <Popup onHide={addModelclose} show={this.state.addModelshow} jobs={jobs.email_of_recruiter} id={jobs._id} title={jobs.title} salary={jobs.salary} name_of_recruiter={jobs.name_of_recruiter}></Popup>
+                                            </TableCell>
                                         </TableRow>
                                 ))}
                                 </TableBody>
