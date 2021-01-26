@@ -16,6 +16,7 @@ export default class Register extends Component {
             type: "Full-Time",
             duration: '0',
             salary: '0',
+            deadline: '',
             date_of_posting:null
         }
 
@@ -25,6 +26,7 @@ export default class Register extends Component {
         this.onChangeType = this.onChangeType.bind(this);
         this.onChangeDuration = this.onChangeDuration.bind(this);
         this.onChangeSalary = this.onChangeSalary.bind(this);
+        this.onChangedeadline = this.onChangedeadline.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
     
@@ -47,6 +49,9 @@ export default class Register extends Component {
     onChangeSalary(event) {
         this.setState({ salary: parseInt(event.target.value) });
     }
+    onChangedeadline(event) {
+        this.setState({ deadline: event.target.value });
+    }
     onSubmit(e) {
         e.preventDefault();
     var user_info=JSON.parse(localStorage.getItem("LoggedinUser"));
@@ -62,6 +67,7 @@ export default class Register extends Component {
             type: this.state.type,
             duration: this.state.duration,
             salary: this.state.salary,
+            deadline: this.state.deadline,
             isDeleted: false,
             isActive: true
         }
@@ -91,6 +97,7 @@ export default class Register extends Component {
             type: "Full-Time",
             duration: '0',
             salary: '0',
+            deadline: '',
             date_of_posting:null
         });
     }
@@ -146,6 +153,14 @@ export default class Register extends Component {
                                className="form-control" 
                                value={this.state.salary}
                                onChange={this.onChangeSalary}
+                               />  
+                    </div>
+                    <div className="form-group">
+                        <label>Deadline of Application: </label>
+                        <input type="Date" 
+                               className="form-control" 
+                               value={this.state.deadline}
+                               onChange={this.onChangedeadline}
                                />  
                     </div>
                     <div className="form-group">

@@ -56,7 +56,7 @@ router.post("/MyJobs", async (req, res) => {
 });
 router.post("/AllJobs", async (req, res) => {
     // const _id=req.body.user;
-    Jobs.find({isActive: true, isDeleted: false})
+    Jobs.find({deadline: { $gt : Date.now()},isActive: true, isDeleted: false})
      .then(MyJobs => res.json(MyJobs))
      .catch(err=> res.status(400).json(err));
 });
