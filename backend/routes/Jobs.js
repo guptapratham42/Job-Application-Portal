@@ -117,7 +117,7 @@ router.post("/MyApplications", async (req, res) => {
 });
 router.post("/MyApplications2", async (req, res) => {
     // const _id=req.body.user;
-    application.find({job_id: req.body.id})
+    application.find({job_id: req.body.id, stage_of_application : { $ne: "Rejected"}})
      .then(MyApplications => res.json(MyApplications))
      .catch(err=> res.status(400).json(err));
 });
@@ -139,4 +139,14 @@ router.post("/Accept", async (req, res) => {
         return res.status(200).json({msg: "Applicant Accepted"});
     })
 });
+router.post("/Reject", async (req, res) => {
+    var query={_id: req.body.id};
+    //console.log("abf");
+    var newval={stage_of_application: "Rejected"};
+    application.updateOne(query, newval, function(err, final)
+    {
+        return res.status(200).json({msg: "Applicant Accepted"});
+    })
+});
+
 module.exports = router;

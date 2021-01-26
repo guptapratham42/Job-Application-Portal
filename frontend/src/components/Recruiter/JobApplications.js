@@ -21,6 +21,7 @@ class UsersList extends Component {
         this.handleClicknd=this.handleClicknd.bind(this);
         this.handleClickAccept= this.handleClickAccept.bind(this);
         this.handleClickShortlist= this.handleClickShortlist.bind(this);
+        this.handleClickReject= this.handleClickReject.bind(this);
     }
     componentDidMount() {
         var user_info=localStorage.getItem("job_id");
@@ -82,6 +83,19 @@ class UsersList extends Component {
            })
         ;
     }
+    handleClickReject(id)
+    {
+        axios.post('http://localhost:4000/jobs/Reject', {id: id})
+        .then(res => {
+            console.log(res.data);
+            if(res.data.msg)
+            {
+                window.location.reload();
+            }
+            //this.setState({jobs: res.data});
+           })
+        ;
+    }
     render() {
         return (
             <div>
@@ -114,6 +128,9 @@ class UsersList extends Component {
                                                 (jobs.stage_of_application==="Shortlisted" ? <button onClick={() => this.handleClickAccept(jobs._id)}>Accept</button> :
                                                 <button>GG</button>)}
                                             </th>
+                                            <TableCell>
+                                                <button onClick={() => this.handleClickReject(jobs._id)}>Reject</button>
+                                            </TableCell>
                                             {/* <th> {jobs.type === "Applied" ?  <Button style = {{backgroundColor:'aqua'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Shortlist</Button> : (  jobs.type === "Shortlisted" ?  <Button style = {{backgroundColor:'yellow'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Accept</Button> : <Button style = {{backgroundColor:'green'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Badhai Ho</Button> )} </th> */}
                                         </TableRow>
                                 ))}
