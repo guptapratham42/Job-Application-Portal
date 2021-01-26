@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import SearchIcon from "@material-ui/icons/Search";
+import Button from 'react-bootstrap/Button';
 class UsersList extends Component {
     
     constructor(props) {
@@ -18,6 +19,8 @@ class UsersList extends Component {
         this.handleClickdi=this.handleClickdi.bind(this);
         this.handleClickni=this.handleClickni.bind(this);
         this.handleClicknd=this.handleClicknd.bind(this);
+        this.handleClickAccept= this.handleClickAccept.bind(this);
+        this.handleClickShortlist= this.handleClickShortlist.bind(this);
     }
     componentDidMount() {
         var user_info=localStorage.getItem("job_id");
@@ -53,6 +56,32 @@ class UsersList extends Component {
         thiss.sort((a, b) => (a.date_of_application > b.date_of_application) ? 1 : -1);
         this.setState({jobs: thiss});
     }
+    handleClickShortlist(id)
+    {
+        axios.post('http://localhost:4000/jobs/Shortlist', {id: id})
+        .then(res => {
+            console.log(res.data);
+            if(res.data.msg)
+            {
+                window.location.reload();
+            }
+            //this.setState({jobs: res.data});
+           })
+        ;
+    }
+    handleClickAccept(id)
+    {
+        axios.post('http://localhost:4000/jobs/Accept', {id: id})
+        .then(res => {
+            console.log(res.data);
+            if(res.data.msg)
+            {
+                window.location.reload();
+            }
+            //this.setState({jobs: res.data});
+           })
+        ;
+    }
     render() {
         return (
             <div>
@@ -70,6 +99,7 @@ class UsersList extends Component {
                                             <TableCell>Date of Application</TableCell>
                                             <TableCell>SOP</TableCell>
                                             <TableCell>Stage of Application</TableCell>
+                                            <TableCell></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -78,7 +108,13 @@ class UsersList extends Component {
                                             <TableCell>{jobs.applicant_name}</TableCell>
                                             <TableCell>{jobs.date_of_application}</TableCell>
                                             <TableCell>{jobs.sop}</TableCell>
-                                            <TableCell>{jobs.stage_of_appliaction}</TableCell>
+                                            <TableCell>{jobs.stage_of_application}</TableCell>
+                                            <th>
+                                                {jobs.stage_of_application==="Applied" ? <button onClick={() => this.handleClickShortlist(jobs._id)}>Shortlist</button> :
+                                                (jobs.stage_of_application==="Shortlisted" ? <button onClick={() => this.handleClickAccept(jobs._id)}>Accept</button> :
+                                                <button>GG</button>)}
+                                            </th>
+                                            {/* <th> {jobs.type === "Applied" ?  <Button style = {{backgroundColor:'aqua'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Shortlist</Button> : (  jobs.type === "Shortlisted" ?  <Button style = {{backgroundColor:'yellow'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Accept</Button> : <Button style = {{backgroundColor:'green'}} variant="contained" onClick={(event)=>{this.changestate(jobs._id,jobs.type,jobs.app,event)}}>Badhai Ho</Button> )} </th> */}
                                         </TableRow>
                                 ))}
                                 </TableBody>

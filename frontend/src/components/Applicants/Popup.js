@@ -44,7 +44,8 @@ export default class Popup extends Component {
             job_id: this.props.id,
             job_title: this.props.title,
             salary: this.props.salary,
-            name_of_recruiter: this.props.name_of_recruiter
+            name_of_recruiter: this.props.name_of_recruiter,
+            stage_of_application: "Applied"
             //id: this.props.user
         }
         console.log(new_application);

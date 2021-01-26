@@ -24,7 +24,7 @@ export default class NavBar extends Component {
                                 <Link to="/MyApplications" className="nav-link">My Applications</Link>
                             </li>
                             <li className="navbar-item">
-                                <Link to="/login" className="nav-link">Login</Link>
+                            <Link to="/" className="nav-link" onClick={() => {localStorage.clear(); window.location.href="/";}}>Logout</Link>
                             </li>                              
                         </ul>
                     </div>

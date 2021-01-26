@@ -121,4 +121,22 @@ router.post("/MyApplications2", async (req, res) => {
      .then(MyApplications => res.json(MyApplications))
      .catch(err=> res.status(400).json(err));
 });
+router.post("/Shortlist", async (req, res) => {
+    var query={_id: req.body.id};
+    //console.log("abf");
+    var newval={stage_of_application: "Shortlisted"};
+    application.updateOne(query, newval, function(err, final)
+    {
+        return res.status(200).json({msg: "Applicant Shortlisted"});
+    })
+});
+router.post("/Accept", async (req, res) => {
+    var query={_id: req.body.id};
+    //console.log("abf");
+    var newval={stage_of_application: "Accepted"};
+    application.updateOne(query, newval, function(err, final)
+    {
+        return res.status(200).json({msg: "Applicant Accepted"});
+    })
+});
 module.exports = router;

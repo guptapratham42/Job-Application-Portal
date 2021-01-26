@@ -33,6 +33,7 @@ const applicationSchema = new Schema
 	stage_of_application:
 	{
 		type: String,
+		default: "Applied"
 		//required: true
 	},
 	email_of_recruiter:
