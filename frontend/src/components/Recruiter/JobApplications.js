@@ -14,6 +14,10 @@ class UsersList extends Component {
     constructor(props) {
         super(props);
         this.state = {jobs: []};
+        this.handleClickdd=this.handleClickdd.bind(this);
+        this.handleClickdi=this.handleClickdi.bind(this);
+        this.handleClickni=this.handleClickni.bind(this);
+        this.handleClicknd=this.handleClicknd.bind(this);
     }
     componentDidMount() {
         var user_info=localStorage.getItem("job_id");
@@ -25,9 +29,37 @@ class UsersList extends Component {
            })
         ;
     }
+    handleClickni()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.applicant_name > b.applicant_name) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClicknd()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.applicant_name < b.applicant_name) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClickdd()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.date_of_application < b.date_of_application) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
+    handleClickdi()
+    {
+        let thiss=this.state.jobs;
+        thiss.sort((a, b) => (a.date_of_application > b.date_of_application) ? 1 : -1);
+        this.setState({jobs: thiss});
+    }
     render() {
         return (
             <div>
+                <button onClick={() => this.handleClickni()}>Name Increasing</button>
+                <button onClick={() => this.handleClicknd()}>Name Decreasing</button>
+                <button onClick={() => this.handleClickdi()}>Date of Application Increasing</button>
+                <button onClick={() => this.handleClickdd()}>Date of Application Decreasing</button>
                 <Grid container>
                     <Grid item xs={12} md={9} lg={9}>
                         <Paper>

@@ -40,6 +40,7 @@ export default class Login extends Component {
                 else
                  {
                     localStorage.setItem("LoggedinUser", JSON.stringify(res.data));
+                    localStorage.setItem("role", res.data.user.role);
                     //console.log(localStorage.getItem("LoggedinUser"));
                     //console.log(res.data[0]);
                     alert("Successfully Logged in\t" + res.data.user.name);console.log(res.data);
